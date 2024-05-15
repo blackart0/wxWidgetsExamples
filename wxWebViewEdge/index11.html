@@ -1,0 +1,157 @@
+<!--
+	此示例下载自 https://echarts.apache.org/examples/zh/editor.html?c=bump-chart
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.0/files/dist/echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.0/files/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts-gl/2/files/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts-stat/latest/files/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/4.9.0/files/map/js/china.js"></script>
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/4.9.0/files/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.0/files/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    const names = [
+  'Orange',
+  'Tomato',
+  'Apple',
+  'Sakana',
+  'Banana',
+  'Iwashi',
+  'Snappy Fish',
+  'Lemon',
+  'Pasta'
+];
+const years = ['2001', '2002', '2003', '2004', '2005', '2006'];
+const shuffle = (array) => {
+  let currentIndex = array.length;
+  let randomIndex = 0;
+  while (currentIndex > 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex]
+    ];
+  }
+  return array;
+};
+const generateRankingData = () => {
+  const map = new Map();
+  const defaultRanking = Array.from({ length: names.length }, (_, i) => i + 1);
+  for (const _ of years) {
+    const shuffleArray = shuffle(defaultRanking);
+    names.forEach((name, i) => {
+      map.set(name, (map.get(name) || []).concat(shuffleArray[i]));
+    });
+  }
+  return map;
+};
+const generateSeriesList = () => {
+  const seriesList = [];
+  const rankingMap = generateRankingData();
+  rankingMap.forEach((data, name) => {
+    const series = {
+      name,
+      symbolSize: 20,
+      type: 'line',
+      smooth: true,
+      emphasis: {
+        focus: 'series'
+      },
+      endLabel: {
+        show: true,
+        formatter: '{a}',
+        distance: 20
+      },
+      lineStyle: {
+        width: 4
+      },
+      data
+    };
+    seriesList.push(series);
+  });
+  return seriesList;
+};
+option = {
+  title: {
+    text: 'Bump Chart (Ranking)'
+  },
+  tooltip: {
+    trigger: 'item'
+  },
+  grid: {
+    left: 30,
+    right: 110,
+    bottom: 30,
+    containLabel: true
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {}
+    }
+  },
+  xAxis: {
+    type: 'category',
+    splitLine: {
+      show: true
+    },
+    axisLabel: {
+      margin: 30,
+      fontSize: 16
+    },
+    boundaryGap: false,
+    data: years
+  },
+  yAxis: {
+    type: 'value',
+    axisLabel: {
+      margin: 30,
+      fontSize: 16,
+      formatter: '#{value}'
+    },
+    inverse: true,
+    interval: 1,
+    min: 1,
+    max: names.length
+  },
+  series: generateSeriesList()
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

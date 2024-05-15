@@ -16,6 +16,10 @@
 # Mono auto generated files
 mono_crash.*
 
+# my specific files
+*.rar
+D2DrawTest/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

@@ -1,0 +1,86 @@
+<!--
+    此示例下载自 https://echarts.apache.org/examples/zh/editor.html?c=dynamic-data2
+-->
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+    <div id="container" style="height: 100%"></div>
+
+
+    <script type="text/javascript" src="echarts.min.js"></script>
+   
+
+    <script type="text/javascript">
+        var dom = document.getElementById('container');
+        var myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+
+       
+        option = {
+            title: {
+                text: '这是一个测试数据'
+            },
+            tooltip: {
+                trigger: 'axis',
+                
+                axisPointer: {
+                    animation: true
+                }
+            },
+            xAxis: {
+                type: 'category',
+                splitLine: {
+                    show: false
+                }
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%'],
+                splitLine: {
+                    show: false
+                }
+            },
+            dataZoom: [{
+                type: 'slider',//图表下方的伸缩条
+                show: true, //是否显示
+                realtime: true, //拖动时，是否实时更新系列的视图
+                start: 0, //伸缩条开始位置（1-100），可以随时更改
+                end: 100, //伸缩条结束位置（1-100），可以随时更改
+            }],
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: "none"
+                    }
+                }
+            },
+            series: [
+            ]
+        };
+        
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+
+       
+        function LoadData(data) {
+            myChart.setOption({
+                series:  data
+            });
+        }
+
+    </script>
+</body>
+</html>
