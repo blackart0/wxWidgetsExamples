@@ -1,4 +1,4 @@
-#include <wx/dcbuffer.h>
+﻿#include <wx/dcbuffer.h>
 #include "bubblespanel.h"
 
 /// 事件定义：圆移动了一步

@@ -1,4 +1,4 @@
-#ifndef BUBBLES_BUBBLESPANEL_H
+﻿#ifndef BUBBLES_BUBBLESPANEL_H
 #define BUBBLES_BUBBLESPANEL_H
 
 #include <wx/wx.h>

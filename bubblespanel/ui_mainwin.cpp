@@ -1,4 +1,4 @@
-///
+﻿///
 // C++ code generated with wxFormBuilder (version 3.10.1-370-gc831f1f7-dirty)
 // http://www.wxformbuilder.org/
 //

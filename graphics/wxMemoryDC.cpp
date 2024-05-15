@@ -1,6 +1,8 @@
-﻿#include "wx/wx.h"
-#include <wx/graphics.h>
-
+#include "wx/wx.h"
+#include "wx/graphics.h"
+#include "wx/dcbuffer.h"
+#include "wx/dcgraph.h"
+#include "wx/overlay.h"
 
 enum
 {
@@ -41,7 +43,7 @@ bool MyApp::OnInit()
 }
 
 MyFrame::MyFrame()
-    : wxFrame(nullptr, wxID_ANY, "Hello World",wxDefaultPosition,wxSize(800,600))
+    : wxFrame(nullptr, wxID_ANY, "Hello World", wxDefaultPosition, wxSize(800, 600))
 {
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
@@ -58,8 +60,8 @@ MyFrame::MyFrame()
 
     SetMenuBar(menuBar);
 
-	MyPanel* panel = new MyPanel(this);
-	panel->SetSize(wxSize(200, 200));
+    MyPanel* panel = new MyPanel(this);
+    panel->SetSize(wxSize(200, 200));
     wxString str;
     if (panel->renderer)
     {
@@ -90,7 +92,7 @@ void MyFrame::OnAbout(wxCommandEvent& event)
 
 void MyFrame::OnHello(wxCommandEvent& event)
 {
-    wxLogMessage("Hello world from wxWidgets!");
+    wxLogMessage(_T("Hello world from wxWidgets! UTF-8 no BOM 不带签名"));
 }
 
 
@@ -102,21 +104,51 @@ MyPanel::MyPanel(wxWindow* parent)
 
 void MyPanel::OnPaint(wxPaintEvent& event) {
     wxPaintDC dc(this);
-    if (renderer) {
-        wxGraphicsContext* context = renderer->CreateContext(dc);
-        if (context) {
-            // 绘制一个简单的矩形
-            wxColour color1(255, 0, 0, 128); // 最后一个参数是 alpha 值（128 表示半透明）
-            wxColour color2(0, 255, 0, 128); // 最后一个参数是 alpha 值（128 表示半透明）
-            context->SetPen(wxPen(color1, 2));
-            context->SetBrush(wxBrush(color2));
-            context->DrawRectangle(10, 10, 100, 100);
-            context->SetPen(wxPen(color2, 2));
-            context->SetBrush(wxBrush(color1));
-            context->DrawRectangle(50, 50, 100, 100);
-            // 释放资源
-            delete context;
+    wxGCDC gdc1,gdc2;
+    wxGraphicsContext* context1;
+    wxPaintDC* paintdc = wxDynamicCast(&dc, wxPaintDC);
+    context1 = renderer->CreateContext(*paintdc);        
+    context1->SetAntialiasMode(wxANTIALIAS_DEFAULT);
+
+    gdc1.SetBackground(*wxLIGHT_GREY_BRUSH);// GetBackgroundColour());
+    gdc1.SetGraphicsContext(context1);
+    
+    wxDC& dc1 = static_cast<wxDC&>(gdc1);
+    PrepareDC(dc1);
+
+        /* 准备wxMemoryDC */
+    wxMemoryDC memDC;
+    wxGraphicsContext* context2 = renderer->CreateContext(&memDC);
+    context2->SetAntialiasMode(wxANTIALIAS_DEFAULT);
+    wxRect rect = this->GetRect();
+    wxBitmap bitmap(rect.GetSize());
+    memDC.SelectObject(bitmap);
+    memDC.Clear();
+
+    double r = 5;
+    wxCoord x, y, lstX=0, lstY=0;
+    memDC.SetPen(wxPen(wxColour(0x3333cc),4));
+    for (int a = 0; a <= 720; ++a) {
+        double b = a * 3.1415 / 180;
+        x = cos(b) * r;
+        y = sin(b) * r;
+        wxPoint2DDouble lines[] = { wxPoint2DDouble(400 + x, 300 + y), wxPoint2DDouble(400 + 400 + lstX, 300 + lstY) };
+        if (a != 0) {
+            context2->DrawLines(1, lines, wxODDEVEN_RULE);
         }
-        //delete renderer;
+        
+        r += 0.25;
+        lstX = x;
+        lstY = y;
     }
+
+    //context2->SetTextForeground(*wxWHITE);
+    context2->DrawText(wxT("By Tiger"), 5, 5);
+
+
+    /* 绘图完毕 */
+
+    /* 复制到wxPaintDC */
+    dc1.Blit(wxPoint(0, 0), rect.GetSize(), &memDC, wxPoint(0, 0));
+    
 }

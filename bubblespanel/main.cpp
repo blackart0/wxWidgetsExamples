@@ -1,14 +1,14 @@
-#include <wx/wx.h>
+﻿#include <wx/wx.h>
 #include "mainwin.h"
 
 class MyApp : public wxApp
 {
 public:
-   bool OnInit() override  /*此函数为入口函数，必须重写*/
+   bool OnInit() override  
    {
        MainWin *frame = new MainWin();
        frame->Show();
-       frame->Center();  // 主窗口居中显示
+       frame->Center(); 
        return true;
    }
 };

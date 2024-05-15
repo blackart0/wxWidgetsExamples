@@ -18,7 +18,7 @@ mono_crash.*
 
 # my specific files
 *.rar
-D2DrawTest/
+wxExamples/
 
 # Build results
 [Dd]ebug/

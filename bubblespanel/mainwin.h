@@ -1,4 +1,4 @@
-#ifndef BUBBLES_MAINWIN_H
+﻿#ifndef BUBBLES_MAINWIN_H
 #define BUBBLES_MAINWIN_H
 
 #include <wx/wx.h>
@@ -15,14 +15,14 @@ public:
     ~MainWin() override;
 
 protected:
-    /// 事件：圆动画控件中的圆移动了一步
-    void BubblesPanelMovedStepEvent(wxCommandEvent &e);
+    // 事件：圆动画控件中的圆移动了一步
+    //void BubblesPanelMovedStepEvent(wxCommandEvent &e);
 
-    /// 绑定所有事件
-    void BindAll();
+    // 绑定所有事件
+    //void BindAll();
 
-    /// 刷新控件的值
-    void FlushCtrlsValue();
+    // 刷新控件的值
+    //void FlushCtrlsValue();
 
 private:
     UI::MainWin *ui;
