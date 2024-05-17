@@ -93,7 +93,7 @@ void MyPanel::OnTimer(wxTimerEvent& event) {
 }
 
 void MyPanel::OnPaint(wxPaintEvent& event) {
-    wxPaintDC dc(this);
+    //wxPaintDC dc(this);
     //dc.SetPen(*wxRED_PEN);
     //for (size_t i = 0; i < controlPoints.size() - 1; i++) {
     //    dc.DrawLine(controlPoints[i], controlPoints[i + 1]);

@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="graphics\wxMemoryDC.cpp">
+    <ClCompile Include="graphics\paint_path.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
