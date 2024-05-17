@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="graphics\paint_path.cpp">
+    <ClCompile Include="graphics\Draw_Part_Ring.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
