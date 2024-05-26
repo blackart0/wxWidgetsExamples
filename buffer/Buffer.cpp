@@ -25,7 +25,7 @@ int Buffer::init()
 {
 	m_s = new char[m_max_size]();
 	if (m_s == nullptr) {
-		cout << "分配m_s失败\n";
+		//cout << "分配m_s失败\n";
 		return -1;
 	}
 	return 0;
@@ -39,7 +39,7 @@ size_t Buffer::read_from_buffer(char*dst,int read_size)
 	if (read_size == -1) {									//全读走
 		memcpy(dst, &m_s[m_read_index], read_max);
 		m_read_index += read_max;
-		printf("读取完成：\t读取%d个字节\n", read_max); 
+		//printf("读取完成：\t读取%d个字节\n", read_max); 
 		total_read += read_max;
 	}
 	else if (read_size > 0) {								//读取指定字节
@@ -47,7 +47,7 @@ size_t Buffer::read_from_buffer(char*dst,int read_size)
 			read_size = read_max;
 		memcpy(dst, &m_s[m_read_index], read_size);
 		m_read_index += read_size;
-		printf("读取完成：\t读取%d个字节\n", read_size);
+		//printf("读取完成：\t读取%d个字节\n", read_size);
 		total_read += read_size;
 	}
 	return read_size;										//返回读取的字节数
@@ -90,7 +90,7 @@ void Buffer::write_to_buffer(char* src)
 	used_size = m_write_index - m_read_index;			
 	remain_size = m_max_size - used_size;
 	cur_size = m_max_size - m_write_index;
-	printf("写入完成：\t总存储%d,剩余空间%d,剩余当前空间%d\n", used_size, remain_size, cur_size);
+	//printf("写入完成：\t总存储%d,剩余空间%d,剩余当前空间%d\n", used_size, remain_size, cur_size);
 }
 
 size_t Buffer::pop_bytes(size_t size)
@@ -104,7 +104,7 @@ size_t Buffer::pop_bytes(size_t size)
 		return 0;
 	if (size == -1) {									//全丢
 		m_read_index += read_max;
-		cout << "丢弃了" << read_max << "个字节" << endl;
+		//cout << "丢弃了" << read_max << "个字节" << endl;
 		total_read += read_max;
 		return read_max;
 	}
@@ -112,7 +112,7 @@ size_t Buffer::pop_bytes(size_t size)
 		if (size > read_max)
 			size = read_max;
 		m_read_index += size;
-		cout << "丢弃了" << size << "个字节" << endl;
+		//cout << "丢弃了" << size << "个字节" << endl;
 		total_read += size;
 	}
 	return size;
@@ -124,7 +124,7 @@ size_t Buffer::init_random_write(char** src)
 	total_write += size;
 	*src = new char[size];
 	char ala = get_random_ala();
-	cout << "随机写入:\t长度为" << size << " 值全是 " << (unsigned char)('a' + ala) << endl;
+	//cout << "随机写入:\t长度为" << size << " 值全是 " << (unsigned char)('a' + ala) << endl;
 	for (int i = 0; i < size; i++) {
 		(*src)[i] = 'a' + ala;
 	}
@@ -141,10 +141,10 @@ void Buffer::adjust_buffer()
 		m_read_index = 0;
 	}
 	else {
-		cout << "调整前read_index write_index" << m_read_index << " " << m_write_index << endl;
+		//cout << "调整前read_index write_index" << m_read_index << " " << m_write_index << endl;
 		memcpy(m_s, &m_s[m_read_index], used_size);		//将数据拷贝至头部
 		m_write_index -= m_read_index;						//写指针也前移
-		cout << "调整了" << used_size << "个字节" << endl;
+		//cout << "调整了" << used_size << "个字节" << endl;
 		m_read_index = 0;								//读指针置0
 	}
 	
@@ -159,13 +159,13 @@ void Buffer::expand_buffer(size_t need_size)			//need_size需要写入的字节�
 	while (remain_size < need_size) {					//剩余空间不够时扩展，用while表示直到扩展至够用
 		expand_size *= m_expand_par;
 		remain_size = expand_size - used_size;
-		cout << "扩展长度中... 总剩余 总长度 " << remain_size << "  " << expand_size << endl;
+		//cout << "扩展长度中... 总剩余 总长度 " << remain_size << "  " << expand_size << endl;
 	}
 	char* s1 = new char[expand_size]();					//申请新的空间
 	memcpy(s1, m_s, m_max_size);
 	free(m_s);
 	m_s = s1;											//将新空间挂载到缓冲区
 	m_max_size = expand_size;							//更新缓冲区总长度
-	cout << "扩展结束，总长度为" << m_max_size << endl;
+	//cout << "扩展结束，总长度为" << m_max_size << endl;
 }
 

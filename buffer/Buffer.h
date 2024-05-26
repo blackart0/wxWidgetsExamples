@@ -18,8 +18,7 @@ public:
 private:	
 	void adjust_buffer();						//调整数据位置至缓冲区头
 	void expand_buffer(size_t need_size);		//扩展缓冲区长度
-
-	size_t init_random_write(char** src);			//随机初始化一段数据（调试用）
+	size_t init_random_write(char** src);		//随机初始化一段数据（调试用）
 private:
 	char* m_s;									//缓冲区指针
 	size_t m_read_index;						//读指针位置
