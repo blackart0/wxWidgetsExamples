@@ -16,10 +16,14 @@
 # Mono auto generated files
 mono_crash.*
 
-# my specific files
+# my special
+img/*.*
+other/
+X64/
+FMMV2/
 *.rar
-wxExamples/
-
+lib/*.*
+*.props
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -400,3 +404,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+wxWidgetsPropertySheet.props
+*.props
