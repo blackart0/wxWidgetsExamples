@@ -1,0 +1,144 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: wxishiko/ubuntu-wxwidgets-build:latest
+    steps:
+      - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
+      - run:
+          name: wxCharts library build
+          command: make
+      - run:
+          name: wxCharts tests build
+          command: make
+          working_directory: tests
+          environment:
+            WXCHARTS: ..
+      - run:
+          name: wxAreaChart sample build
+          command: make
+          working_directory: samples/areachart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxBarChart sample build
+          command: make
+          working_directory: samples/barchart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxBoxPlot sample build
+          command: make
+          working_directory: samples/boxplot
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxBubble sample build
+          command: make
+          working_directory: samples/bubble
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxCandlestick sample build
+          command: make
+          working_directory: samples/candlestick
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxColumnChart sample build
+          command: make
+          working_directory: samples/columnchart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxCombinationChart sample build
+          command: make
+          working_directory: samples/combinationchart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxDoughnutChart sample build
+          command: make
+          working_directory: samples/doughnutchart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxHistogram sample build
+          command: make
+          working_directory: samples/histogram
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxLineChart sample build
+          command: make
+          working_directory: samples/linechart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxMath2D sample build
+          command: make
+          working_directory: samples/math2d
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxMath2D interactive sample build
+          command: make
+          working_directory: samples/math2dinteractive
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxOHLC sample build
+          command: make
+          working_directory: samples/ohlc
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxPieChart sample build
+          command: make
+          working_directory: samples/piechart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxPolarArea sample build
+          command: make
+          working_directory: samples/polararea
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxRadar sample build
+          command: make
+          working_directory: samples/radar
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxScatterPlot sample build
+          command: make
+          working_directory: samples/scatterplot
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: Shared wxChartsCategoricalData sample build
+          command: make
+          working_directory: samples/sharedcategoricaldata
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxStackedBarChart sample build
+          command: make
+          working_directory: samples/stackedbarchart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxStackedColumnChart sample build
+          command: make
+          working_directory: samples/stackedcolumnchart
+          environment:
+            WXCHARTS_ROOT: ../..
+      - run:
+          name: wxTimeSeriesChart sample build
+          command: make
+          working_directory: samples/timeseries
+          environment:
+            WXCHARTS_ROOT: ../..
