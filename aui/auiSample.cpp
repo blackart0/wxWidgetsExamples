@@ -5,7 +5,7 @@
 class MyFrame : public wxFrame
 {
 public:
-    MyFrame(wxWindow* parent) : wxFrame(parent, -1, _("wxAUI Test"), wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE)
+    MyFrame(wxWindow* parent) : wxFrame(parent, -1, _("wxAUI Test"), wxDefaultPosition, wxSize(1440, 900), wxDEFAULT_FRAME_STYLE)
     {
         // notify wxAUI which frame to use
         m_mgr.SetManagedWindow(this);
